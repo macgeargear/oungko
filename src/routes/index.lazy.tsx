@@ -15,9 +15,6 @@ function Page() {
         <Button>
           <Link to="/flow">flow</Link>
         </Button>
-        <Button>
-          <Link to="/turboflow">turbo flow</Link>
-        </Button>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import Flow from "../components/flow/Flow";
+import Flow from "../components/roadmap/Roadmap";
 
-export const Route = createLazyFileRoute("/flow")({
+export const Route = createLazyFileRoute("/roadmap")({
   component: Page,
 });
 

@@ -16,21 +16,15 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
-const TurboflowLazyImport = createFileRoute('/turboflow')()
-const FlowLazyImport = createFileRoute('/flow')()
+const RoadmapLazyImport = createFileRoute('/roadmap')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
-const TurboflowLazyRoute = TurboflowLazyImport.update({
-  path: '/turboflow',
+const RoadmapLazyRoute = RoadmapLazyImport.update({
+  path: '/roadmap',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/turboflow.lazy').then((d) => d.Route))
-
-const FlowLazyRoute = FlowLazyImport.update({
-  path: '/flow',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/flow.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/roadmap.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -45,12 +39,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/flow': {
-      preLoaderRoute: typeof FlowLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/turboflow': {
-      preLoaderRoute: typeof TurboflowLazyImport
+    '/roadmap': {
+      preLoaderRoute: typeof RoadmapLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -60,8 +50,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
-  FlowLazyRoute,
-  TurboflowLazyRoute,
+  RoadmapLazyRoute,
 ])
 
 /* prettier-ignore-end */

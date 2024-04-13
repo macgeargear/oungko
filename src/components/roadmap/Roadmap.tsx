@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import ReactFlow, {
-  useNodesState,
   useEdgesState,
   addEdge,
   Controls,
+  useNodesState,
 } from "reactflow";
 
 import "reactflow/dist/base.css";
@@ -19,20 +19,19 @@ const initNodes = [
     id: "hg",
     type: "custom",
     data: { title: "Hiragana", desc: "basic japanese character", emoji: "👶🏻" },
-    position: { x: 0, y: 50 },
+    position: { x: 200, y: 50 },
   },
   {
-    id: "2",
-    type: "kt",
+    id: "kt",
+    type: "custom",
     data: { title: "Katakana", desc: "basic japanese character", emoji: "🤓" },
-
-    position: { x: -200, y: 200 },
+    position: { x: -200, y: 50 },
   },
   {
     id: "kj",
     type: "custom",
     data: { title: "Kanji", desc: "japanese character", emoji: "😎" },
-    position: { x: 200, y: 200 },
+    position: { x: 0, y: 200 },
   },
 ];
 
@@ -44,19 +43,18 @@ const initEdges = [
   },
   {
     id: "kt->kj",
-    source: "hg",
+    source: "kt",
     target: "kj",
   },
 ];
 
-const Flow = () => {
+const Roadmap = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges);
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     []
   );
-
   return (
     <div className="w-[100vw] h-[100vh]">
       <ReactFlow
@@ -74,4 +72,4 @@ const Flow = () => {
   );
 };
 
-export default Flow;
+export default Roadmap;
