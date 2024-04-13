@@ -15,12 +15,9 @@ export interface CustomNodeProps {
 function CustomNode({ data }: CustomNodeProps) {
   return (
     <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-stone-400">
-      <NodeToolbar position={Position.Right}>
+      <NodeToolbar position={Position.Top}>
         <div className="flex flex-col items-start gap-1 rounded-md p-2">
           <RoadmapDetail />
-          {/* <Button variant="outline" size="lg" className="border-2 text-lg">
-            Details
-          </Button> */}
           <Button variant="outline" size="lg" className="border-2 text-lg">
             Buy
           </Button>
