@@ -3,6 +3,7 @@ import { memo } from "react";
 import { Handle, Position, NodeToolbar } from "reactflow";
 import { Button } from "../ui/button";
 import { RoadmapDetail } from "./RoadmapDetail";
+import { Link } from "@tanstack/react-router";
 
 export interface CustomNodeProps {
   data: {
@@ -21,9 +22,14 @@ function CustomNode({ data }: CustomNodeProps) {
           <Button variant="outline" size="lg" className="border-2 text-lg">
             Buy
           </Button>
-          <Button variant="outline" size="lg" className="border-2 text-lg">
-            Learn
-          </Button>
+          <Link
+            to={`/courses/$coursesName`}
+            params={{ coursesName: data.title }}
+          >
+            <Button variant="outline" size="lg" className="border-2 text-lg">
+              Learn
+            </Button>
+          </Link>
         </div>
       </NodeToolbar>
       <div className="flex">
