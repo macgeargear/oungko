@@ -8,13 +8,10 @@ export const Route = createLazyFileRoute("/")({
 
 function Page() {
   return (
-    // <div className="h-screen flex items-center justify-center">
-    <div className="container mx-auto my-auto">
-      <div className="flex flex-col justify-center items-center">
+    <div className="h-screen flex items-center justify-center">
+      <div className="text-center">
         <h1 className="text-6xl font-mono">Oungko</h1>
-        <Button>
-          <Link to="/roadmap">flow</Link>
-        </Button>
+        <p className=" font-mono">a guide for learning japanese</p>
       </div>
     </div>
   );
