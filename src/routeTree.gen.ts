@@ -16,10 +16,16 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
+const TurboflowLazyImport = createFileRoute('/turboflow')()
 const FlowLazyImport = createFileRoute('/flow')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
+
+const TurboflowLazyRoute = TurboflowLazyImport.update({
+  path: '/turboflow',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/turboflow.lazy').then((d) => d.Route))
 
 const FlowLazyRoute = FlowLazyImport.update({
   path: '/flow',
@@ -43,11 +49,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FlowLazyImport
       parentRoute: typeof rootRoute
     }
+    '/turboflow': {
+      preLoaderRoute: typeof TurboflowLazyImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([IndexLazyRoute, FlowLazyRoute])
+export const routeTree = rootRoute.addChildren([
+  IndexLazyRoute,
+  FlowLazyRoute,
+  TurboflowLazyRoute,
+])
 
 /* prettier-ignore-end */

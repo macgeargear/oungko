@@ -1,20 +1,77 @@
-import ReactFlow, { Controls } from "reactflow";
-import "reactflow/dist/style.css";
+import { useCallback } from "react";
+import ReactFlow, {
+  useNodesState,
+  useEdgesState,
+  addEdge,
+  Controls,
+} from "reactflow";
 
-const initialNodes = [
-  { id: "1", position: { x: 0, y: 20 }, data: { label: "1" } },
-  { id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
-];
-const initialEdges = [
-  { id: "e1-2", source: "1", target: "2", lebel: "to the", type: "step" },
+import "reactflow/dist/base.css";
+
+import CustomNode from "./CustomNode";
+
+const nodeTypes = {
+  custom: CustomNode,
+};
+
+const initNodes = [
+  {
+    id: "hg",
+    type: "custom",
+    data: { title: "Hiragana", desc: "basic japanese character", emoji: "👶🏻" },
+    position: { x: 0, y: 50 },
+  },
+  {
+    id: "2",
+    type: "kt",
+    data: { title: "Katakana", desc: "basic japanese character", emoji: "🤓" },
+
+    position: { x: -200, y: 200 },
+  },
+  {
+    id: "kj",
+    type: "custom",
+    data: { title: "Kanji", desc: "japanese character", emoji: "😎" },
+    position: { x: 200, y: 200 },
+  },
 ];
 
-export default function Flow() {
+const initEdges = [
+  {
+    id: "hg->kj",
+    source: "hg",
+    target: "kj",
+  },
+  {
+    id: "kt->kj",
+    source: "hg",
+    target: "kj",
+  },
+];
+
+const Flow = () => {
+  const [nodes, setNodes, onNodesChange] = useNodesState(initNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges);
+  const onConnect = useCallback(
+    (params) => setEdges((eds) => addEdge(params, eds)),
+    []
+  );
+
   return (
-    <div className="w-[100vw] h-[100vh] p-4">
-      <ReactFlow nodes={initialNodes} edges={initialEdges}>
+    <div className="w-[100vw] h-[100vh]">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        nodeTypes={nodeTypes}
+        fitView
+      >
         <Controls />
       </ReactFlow>
     </div>
   );
-}
+};
+
+export default Flow;
