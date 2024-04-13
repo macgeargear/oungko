@@ -25,8 +25,7 @@ interface RoadmapProps {
 }
 
 const Roadmap = ({ initCourseNode, initCourseEdge }: RoadmapProps) => {
-  const [nodes, setNodes, onNodesChange] =
-    useNodesState<CourseNode[]>(initCourseNode);
+  const [nodes, , onNodesChange] = useNodesState<CourseNode[]>(initCourseNode);
   const [edges, setEdges, onEdgesChange] =
     useEdgesState<CourseEdge[]>(initCourseEdge);
   const onConnect = useCallback(

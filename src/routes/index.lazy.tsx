@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
 
 export const Route = createLazyFileRoute("/")({
   component: Page,
