@@ -1,6 +1,12 @@
-import Kana from "@/components/Kana";
+import KanaCard from "@/components/KanaCard";
+import KanaModeCard from "@/components/KanaModeCard";
 import { Button } from "@/components/ui/button";
+import { hiragana, katakana, mainHiragana } from "@/lib/constant";
+import { cn } from "@/lib/utils";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { useAtom } from "jotai";
+import { kanaKindAtom, quizAtom } from "@/atom/atom";
 
 export const Route = createFileRoute("/courses/$coursesName")({
   loader: async ({ params }) => {
@@ -9,72 +15,22 @@ export const Route = createFileRoute("/courses/$coursesName")({
   component: Page,
 });
 
-const hiragana = [
-  { title: "あ", desc: "a" },
-  { title: "い", desc: "i" },
-  { title: "う", desc: "u" },
-  { title: "え", desc: "e" },
-  { title: "お", desc: "o" },
-
-  { title: "か", desc: "ka" },
-  { title: "き", desc: "ki" },
-  { title: "く", desc: "ku" },
-  { title: "け", desc: "ke" },
-  { title: "こ", desc: "ko" },
-
-  { title: "さ", desc: "sa" },
-  { title: "し", desc: "shi" },
-  { title: "す", desc: "su" },
-  { title: "せ", desc: "se" },
-  { title: "そ", desc: "so" },
-
-  { title: "た", desc: "ta" },
-  { title: "ち", desc: "chi" },
-  { title: "つ", desc: "tsu" },
-  { title: "て", desc: "te" },
-  { title: "と", desc: "to" },
-
-  { title: "な", desc: "na" },
-  { title: "に", desc: "ni" },
-  { title: "ぬ", desc: "nu" },
-  { title: "ね", desc: "ne" },
-  { title: "の", desc: "no" },
-
-  { title: "は", desc: "ha" },
-  { title: "ひ", desc: "hi" },
-  { title: "ふ", desc: "fu" },
-  { title: "へ", desc: "he" },
-  { title: "ほ", desc: "ho" },
-
-  { title: "ま", desc: "ma" },
-  { title: "み", desc: "mi" },
-  { title: "む", desc: "mu" },
-  { title: "め", desc: "me" },
-  { title: "も", desc: "mo" },
-
-  { title: "や", desc: "ya" },
-  { title: "ゆ", desc: "yu" },
-  { title: "よ", desc: "yo" },
-
-  { title: "ら", desc: "ra" },
-  { title: "り", desc: "ri" },
-  { title: "る", desc: "ru" },
-  { title: "れ", desc: "re" },
-  { title: "ろ", desc: "ro" },
-
-  { title: "わ", desc: "wa" },
-  { title: "を", desc: "wo" },
-  { title: "ん", desc: "n" },
-];
-
 function Page() {
   const { coursesName } = Route.useParams();
-  let kana: { title: string; desc: string }[] = [];
+  let kana: { title: string; desc: string; type: string }[] = [];
   switch (coursesName) {
     case "Hiragana":
       kana = hiragana;
       break;
+    case "Katakana":
+      kana = katakana;
+      break;
   }
+
+  const [hoveredKanaMode, setHoveredKanaMode] = useState<string | null>(null);
+  const [quizType, setQuizType] = useAtom(quizAtom);
+  const [quizKind, setQuizKind] = useAtom(kanaKindAtom);
+  console.log(quizType);
 
   return (
     <>
@@ -85,16 +41,51 @@ function Page() {
           </Link>
         </div>
         <h1 className="text-5xl text-center font-mono mb-4">{coursesName}</h1>
-        <div className="flex justify-center items-center gap-40">
+        <div className="flex justify-center  gap-40">
           <div className="grid grid-cols-5 gap-2 w-fit">
-            {kana.map(({ title, desc }) => (
-              <Kana title={title} desc={desc} />
+            {kana.map(({ title, desc, type }) => (
+              <KanaCard
+                title={title}
+                desc={desc}
+                className={cn({
+                  "bg-slate-200/50": quizType.includes(type),
+                })}
+              />
             ))}
           </div>
-          <div className="grid grid-cols-5 gap-2 w-fit">
-            {kana.map(({ title, desc }) => (
-              <Kana title={title} desc={desc} />
-            ))}
+          <div className="flex flex-col justify-start">
+            <h1 className="text-2xl font-mono text-center">Quiz Mode</h1>
+            <div className="grid grid-cols-2 h-fit gap-2">
+              {mainHiragana.map((kana) => (
+                <KanaModeCard
+                  key={kana.title}
+                  title={kana.title}
+                  desc={kana.desc}
+                  className={cn({
+                    "bg-slate-200/50": quizType.includes(kana.desc),
+                  })}
+                  onMouseEnter={() => setHoveredKanaMode(kana.desc)}
+                  onClick={() => {
+                    setQuizKind(kana.kind);
+                    // setHoveredKanaMode(kana.desc);
+                    if (quizType.includes(kana.desc)) {
+                      setQuizType((quizType) =>
+                        quizType.filter((type) => kana.desc != type)
+                      );
+                    } else {
+                      setQuizType((quizType) => [...quizType, kana.desc]);
+                    }
+                  }}
+                />
+              ))}
+            </div>
+            <Link
+              to="/quiz/$quizType"
+              className="flex justify-center my-4"
+              params={{ quizType: quizKind }}
+            >
+              <Button size="lg">Start Quiz</Button>
+            </Link>
           </div>
         </div>
       </div>

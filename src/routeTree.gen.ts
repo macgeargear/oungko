@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as QuizQuizTypeImport } from './routes/quiz.$quizType'
 import { Route as CoursesCoursesNameImport } from './routes/courses.$coursesName'
 
 // Create Virtual Routes
@@ -31,6 +32,11 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const QuizQuizTypeRoute = QuizQuizTypeImport.update({
+  path: '/quiz/$quizType',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const CoursesCoursesNameRoute = CoursesCoursesNameImport.update({
   path: '/courses/$coursesName',
@@ -53,6 +59,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CoursesCoursesNameImport
       parentRoute: typeof rootRoute
     }
+    '/quiz/$quizType': {
+      preLoaderRoute: typeof QuizQuizTypeImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -62,6 +72,7 @@ export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   RoadmapLazyRoute,
   CoursesCoursesNameRoute,
+  QuizQuizTypeRoute,
 ])
 
 /* prettier-ignore-end */
