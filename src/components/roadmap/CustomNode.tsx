@@ -1,12 +1,13 @@
+/* eslint-disable react-refresh/only-export-components */
 import { memo } from "react";
 import { Handle, Position, NodeToolbar } from "reactflow";
 import { Button } from "../ui/button";
-import { DrawerDetail } from "./DrawerDetail";
+import { RoadmapDetail } from "./RoadmapDetail";
 
 export interface CustomNodeProps {
   data: {
-    emoji: string;
     title: string;
+    emoji: string;
     desc: string;
   };
 }
@@ -16,7 +17,7 @@ function CustomNode({ data }: CustomNodeProps) {
     <div className="px-4 py-2 shadow-md rounded-md bg-white border-2 border-stone-400">
       <NodeToolbar position={Position.Right}>
         <div className="flex flex-col items-start gap-1 rounded-md p-2">
-          <DrawerDetail />
+          <RoadmapDetail />
           {/* <Button variant="outline" size="lg" className="border-2 text-lg">
             Details
           </Button> */}

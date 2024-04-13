@@ -1,4 +1,3 @@
-import * as React from "react";
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-export function DrawerDetail() {
+export function RoadmapDetail() {
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
@@ -21,7 +20,7 @@ export function DrawerDetail() {
           Detail
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="h-4/5">
+      <DrawerContent>
         <div className="mx-auto w-full ">
           <DrawerHeader>
             <DrawerTitle>Move Goal</DrawerTitle>

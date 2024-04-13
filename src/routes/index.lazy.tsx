@@ -13,7 +13,7 @@ function Page() {
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-6xl font-mono">Oungko</h1>
         <Button>
-          <Link to="/flow">flow</Link>
+          <Link to="/roadmap">flow</Link>
         </Button>
       </div>
     </div>

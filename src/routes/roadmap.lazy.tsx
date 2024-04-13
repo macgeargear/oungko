@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import Flow from "../components/roadmap/Roadmap";
+import { RoadmapContainer } from "@/components/roadmap/RoadmapContainer";
 
 export const Route = createLazyFileRoute("/roadmap")({
   component: Page,
@@ -8,8 +8,7 @@ export const Route = createLazyFileRoute("/roadmap")({
 function Page() {
   return (
     <div className="p-2">
-      hi from oungko
-      <Flow />
+      <RoadmapContainer />
     </div>
   );
 }
