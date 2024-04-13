@@ -8,6 +8,7 @@ export const Route = createLazyFileRoute("/flow")({
 function Page() {
   return (
     <div className="p-2">
+      hi from oungko
       <Flow />
     </div>
   );
