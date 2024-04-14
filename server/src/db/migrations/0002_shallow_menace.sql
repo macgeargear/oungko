@@ -1,0 +1,1 @@
+ALTER TABLE "vocabs" ADD COLUMN "level" text;

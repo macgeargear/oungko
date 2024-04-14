@@ -1,20 +1,26 @@
 {
+  "name": "app",
+  "version": "1.0.50",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "db:generate": "drizzle-kit generate:pg --schema ./src/db/schema.ts --out=./src/db/migrations",
-    "db:migrate": "tsx ./src/db/migrate.ts",
-    "db:seed": "tsx ./src/db/seed.ts"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts",
+    "db:generate": "drizzle-kit generate:pg",
+    "db:migrate": "bun run ./src/db/migrate.ts",
+    "db:seed": "bun run ./src/db/seed.ts",
+    "format": "bunx @biomejs/biome format ./src --write",
+    "lint": "bunx @biomejs/biome lint ./src",
+    "start": "bun run src/index.ts"
   },
   "dependencies": {
-    "@hono/node-server": "^1.10.0",
     "@neondatabase/serverless": "^0.9.0",
-    "dotenv": "^16.4.5",
+    "@paralleldrive/cuid2": "^2.2.2",
     "drizzle-orm": "^0.30.8",
-    "hono": "^4.2.3"
+    "elysia": "latest",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@types/node": "^20.12.7",
-    "drizzle-kit": "^0.20.14",
-    "tsx": "^4.7.2"
-  }
+    "bun-types": "latest",
+    "drizzle-kit": "^0.20.14"
+  },
+  "module": "src/index.js"
 }

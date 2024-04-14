@@ -1,5 +1,7 @@
-import { Hono } from "hono";
+import { Elysia } from "elysia";
+import { getUserByEmail } from "./user.service";
 
-export const userRoute = new Hono();
+const userRoute = new Elysia({ prefix: "/users" });
+userRoute.get("/:email", ({ params: { email } }) => getUserByEmail(email));
 
-userRoute.get("/", (c) => c.text("henlo vvorld from /user"));
+export default userRoute;

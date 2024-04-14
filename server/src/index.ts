@@ -1,18 +1,12 @@
-import { serve } from "@hono/node-server";
-import { Hono } from "hono";
-import { userRoute } from "./internal/user/user.controller";
+import userRoute from "./internal/user/user.controller";
+import { Elysia } from "elysia";
 
-const app = new Hono();
+const app = new Elysia().get("/", () => "Hello Elysia");
+app.use(userRoute);
+app.get("/:id", ({ params: { id } }) => ({ id }));
 
-app.route("/users", userRoute);
-app.get("/", (c) => {
-  return c.text("Hello Hono!");
-});
+console.log(
+  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
+);
 
-const port = 3001;
-console.log(`Server is running on port ${port}`);
-
-serve({
-  fetch: app.fetch,
-  port,
-});
+app.listen(3000);
