@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "cd server",
-    "client-dev": "cd client && pnpm dev"
+    "server": "cd server && pnpm dev",
+    "client": "cd client && pnpm dev"
   },
   "keywords": [],
   "author": "github.com/macgeargear",
