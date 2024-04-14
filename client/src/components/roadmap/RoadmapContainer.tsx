@@ -82,16 +82,16 @@ const advanceCourseNode: CourseNode[] = [
 
 export function RoadmapContainer() {
   return (
-    <div className="container px-4">
+    <div className="container px-4 mt-40">
       <Tabs defaultValue="basic" className="w-full ">
         <TabsList className="grid w-full grid-cols-3 h-fit">
-          <TabsTrigger className="text-2xl" value="basic">
+          <TabsTrigger className="text-xl lg:text-2xl" value="basic">
             Basic
           </TabsTrigger>
-          <TabsTrigger className="text-2xl" value="intermediate">
+          <TabsTrigger className="text-xl lg:text-2xl" value="intermediate">
             Intermediate
           </TabsTrigger>
-          <TabsTrigger className="text-2xl" value="advance">
+          <TabsTrigger className="text-xl lg:text-2xl" value="advance">
             Advance
           </TabsTrigger>
         </TabsList>
