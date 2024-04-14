@@ -6,10 +6,8 @@ export const Route = createFileRoute("/quiz/$quizType")({
 });
 
 function Page() {
-  const { quizType } = Route.useParams();
   return (
     <>
-      <div className="container">Hello {quizType}</div>
       <QuizContainer />
     </>
   );

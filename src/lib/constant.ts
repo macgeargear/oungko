@@ -1,3 +1,9 @@
+export interface MainKana {
+  title: string;
+  desc: string;
+  kind: string;
+}
+
 export const mainHiragana = [
   { title: "あ", desc: "a", kind: "hira" },
   { title: "か", desc: "ka", kind: "hira" },
@@ -59,6 +65,7 @@ export const hiragana = [
   { title: "を", desc: "wo", type: "wa", kind: "hira" },
   { title: "ん", desc: "n", type: "wa", kind: "hira" },
 ];
+
 export const katakana = [
   { title: "ア", desc: "a", type: "a", kind: "kata" },
   { title: "イ", desc: "i", type: "a", kind: "kata" },
@@ -107,3 +114,33 @@ export const katakana = [
   { title: "ヲ", desc: "wo", type: "wa", kind: "kata" },
   { title: "ン", desc: "n", type: "wa" },
 ];
+
+export const hiraganaConversion: { [key: string]: string } = {
+  a: "あ",
+  i: "い",
+  u: "う",
+  e: "え",
+  o: "お",
+
+  ka: "か",
+  ki: "き",
+  ku: "く",
+  ke: "け",
+  ko: "こ",
+
+  ga: "が",
+  gi: "ぎ",
+  gu: "ぐ",
+  ge: "げ",
+  go: "ご",
+
+  pa: "ぱ",
+  pi: "ぴ",
+  pu: "ぷ",
+  pe: "ぺ",
+  po: "ぽ",
+
+  kya: "きゃ",
+  kyu: "きゅ",
+  n: "ん",
+};

@@ -6,13 +6,13 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-export interface KanaProps {
+interface KanaCardProps {
   title: string;
   desc: string;
   className?: string;
 }
 
-export default function KanaCard({ title, desc, className }: KanaProps) {
+export default function KanaCard({ title, desc, className }: KanaCardProps) {
   return (
     <Card className={cn("w-fit", className)}>
       <CardHeader>

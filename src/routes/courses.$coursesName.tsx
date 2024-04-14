@@ -1,17 +1,14 @@
 import KanaCard from "@/components/KanaCard";
 import KanaModeCard from "@/components/KanaModeCard";
 import { Button } from "@/components/ui/button";
-import { hiragana, katakana, mainHiragana } from "@/lib/constant";
+import { MainKana, hiragana, katakana, mainHiragana } from "@/lib/constant";
 import { cn } from "@/lib/utils";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { useAtom } from "jotai";
-import { kanaKindAtom, quizAtom } from "@/atom/atom";
+import { kanaKindAtom, mainKanaAtom, quizResultAtom } from "@/atom/atom";
 
 export const Route = createFileRoute("/courses/$coursesName")({
-  loader: async ({ params }) => {
-    console.log(params.coursesName);
-  },
   component: Page,
 });
 
@@ -28,9 +25,54 @@ function Page() {
   }
 
   const [, setHoveredKanaMode] = useState<string | null>(null);
-  const [quizType, setQuizType] = useAtom(quizAtom);
+  const [mainKanaQuiz, setMainKanaQuiz] = useAtom(mainKanaAtom);
   const [quizKind, setQuizKind] = useAtom(kanaKindAtom);
-  console.log(quizType);
+  const [, setQuizResult] = useAtom(quizResultAtom);
+
+  // add kana to quiz result
+  const handleSelectKana = (mainKana: MainKana) => {
+    setQuizKind(mainKana.kind);
+    if (mainKanaQuiz.includes(mainKana.desc)) {
+      setMainKanaQuiz((quizType) =>
+        quizType.filter((type) => mainKana.desc != type)
+      );
+      setQuizResult((quizResult) =>
+        quizResult.filter((result) => result.problem !== mainKana.desc)
+      );
+    } else {
+      setMainKanaQuiz((quizType) => [...quizType, mainKana.desc]);
+      switch (mainKana.kind) {
+        case "hira":
+          setQuizResult((prev) => [
+            ...prev,
+            ...hiragana
+              .filter((kana) => kana.type === mainKana.desc)
+              .map((kana) => ({
+                problem: kana.title,
+                desc: kana.desc,
+                solution: kana.desc,
+                answer: "",
+                type: kana.type,
+              })),
+          ]);
+          break;
+        case "kata":
+          setQuizResult((prev) => [
+            ...prev,
+            ...katakana
+              .filter((kana) => kana.type === mainKana.title)
+              .map((kana) => ({
+                problem: kana.title,
+                desc: kana.desc,
+                solution: kana.desc,
+                answer: "",
+                type: kana.type,
+              })),
+          ]);
+          break;
+      }
+    }
+  };
 
   return (
     <>
@@ -48,7 +90,7 @@ function Page() {
                 title={title}
                 desc={desc}
                 className={cn({
-                  "bg-slate-200/50": quizType.includes(type),
+                  "bg-slate-200/50": mainKanaQuiz.includes(type),
                 })}
               />
             ))}
@@ -62,19 +104,12 @@ function Page() {
                   title={kana.title}
                   desc={kana.desc}
                   className={cn({
-                    "bg-slate-200/50": quizType.includes(kana.desc),
+                    "bg-slate-200/50": mainKanaQuiz.includes(kana.desc),
                   })}
                   onMouseEnter={() => setHoveredKanaMode(kana.desc)}
-                  onClick={() => {
-                    setQuizKind(kana.kind);
-                    // setHoveredKanaMode(kana.desc);
-                    if (quizType.includes(kana.desc)) {
-                      setQuizType((quizType) =>
-                        quizType.filter((type) => kana.desc != type)
-                      );
-                    } else {
-                      setQuizType((quizType) => [...quizType, kana.desc]);
-                    }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSelectKana(kana);
                   }}
                 />
               ))}
