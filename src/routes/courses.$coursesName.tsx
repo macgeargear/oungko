@@ -27,7 +27,7 @@ function Page() {
       break;
   }
 
-  const [hoveredKanaMode, setHoveredKanaMode] = useState<string | null>(null);
+  const [, setHoveredKanaMode] = useState<string | null>(null);
   const [quizType, setQuizType] = useAtom(quizAtom);
   const [quizKind, setQuizKind] = useAtom(kanaKindAtom);
   console.log(quizType);
