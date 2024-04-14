@@ -30,7 +30,7 @@ export default function Navbar() {
             </Link>
             <Link
               className="font-medium flex items-center text-sm transition-colors hover:underline"
-              href="#"
+              to="/about"
             >
               About
             </Link>

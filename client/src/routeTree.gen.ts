@@ -19,6 +19,7 @@ import { Route as CoursesCoursesNameImport } from './routes/courses.$coursesName
 // Create Virtual Routes
 
 const RoadmapLazyImport = createFileRoute('/roadmap')()
+const AboutLazyImport = createFileRoute('/about')()
 const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
@@ -27,6 +28,11 @@ const RoadmapLazyRoute = RoadmapLazyImport.update({
   path: '/roadmap',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/roadmap.lazy').then((d) => d.Route))
+
+const AboutLazyRoute = AboutLazyImport.update({
+  path: '/about',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
 const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
@@ -51,6 +57,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/about': {
+      preLoaderRoute: typeof AboutLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/roadmap': {
       preLoaderRoute: typeof RoadmapLazyImport
       parentRoute: typeof rootRoute
@@ -70,6 +80,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
+  AboutLazyRoute,
   RoadmapLazyRoute,
   CoursesCoursesNameRoute,
   QuizQuizTypeRoute,
